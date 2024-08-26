@@ -5,23 +5,32 @@ import { PrismaService } from 'prisma.service';
 
 @Injectable()
 export class UserService {
+  /* Depedency Injection for using the PrismaService */
+  constructor (private prismaService : PrismaService) {}
+
   create(createUserDto: CreateUserDto) {
-    return createUserDto
+    return this.prismaService.user.create({data: createUserDto})
   }
 
   findAll() {
-    return `This action returns all user`;
+    return this.prismaService.user.findMany();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} user`;
+    return this.prismaService.user.findUnique({where: {
+      id: id
+    }})
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+    return this.prismaService.user.update({
+      where: {
+        id: id
+      }, data: updateUserDto
+    })
   }
 
   remove(id: number) {
-    return `This action removes a #${id} user`;
+    return this.prismaService.user.delete({where: {id: id}})
   }
 }
