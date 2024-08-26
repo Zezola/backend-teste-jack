@@ -1,10 +1,11 @@
 import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { PrismaService } from 'prisma.service';
 import { compare } from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class AuthService {
-    constructor (private prismaService: PrismaService) {}
+    constructor (private prismaService: PrismaService, private jwtService: JwtService) {}
 
     async signIn(email: string, pass: string) {
         // Validating user email against the database
@@ -19,9 +20,10 @@ export class AuthService {
         if (!isValidPassword) {
             throw new UnauthorizedException(`Invalid Credentials`)
         }
-        // TODO: Sign a JWT token to the user instead of returning the user.
-        // This is just for TESTING purposes. DO NOT keep it that way.
-        const {password, ...result} = user;
-        return result;
+        
+        const payload = {sub: user.id, email: user.email};
+        return {
+            access_token: this.jwtService.sign(payload)
+        }
     }
 }
