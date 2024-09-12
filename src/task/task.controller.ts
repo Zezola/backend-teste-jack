@@ -26,6 +26,12 @@ export class TaskController {
     return this.taskService.findOne(+id);
   }
 
+  @Get('userTasks')
+  @UseGuards(AuthGuard)
+  findByUserId(@Body() id: string) {
+    return this.taskService.findByUserId(id);
+  }
+
   @Patch(':id')
   @UseGuards(AuthGuard)
   update(@Param('id') id: string, @Body() updateTaskDto: UpdateTaskDto) {
