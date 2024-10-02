@@ -20,16 +20,16 @@ export class TaskController {
     return this.taskService.findAll();
   }
 
+  @Get('tasksByUser/:userId')
+  @UseGuards(AuthGuard)
+  findByUserId(@Param('userId') userId : string) {
+    return this.taskService.findByUserId(userId);
+  }
+
   @Get(':id')
   @UseGuards(AuthGuard)
   findOne(@Param('id') id: string) {
     return this.taskService.findOne(+id);
-  }
-
-  @Get('userTasks')
-  @UseGuards(AuthGuard)
-  findByUserId(@Body() id: string) {
-    return this.taskService.findByUserId(id);
   }
 
   @Patch(':id')
