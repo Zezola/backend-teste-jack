@@ -7,29 +7,35 @@ import { PrismaService } from 'prisma.service';
 export class TaskService {
   constructor(private prismaService : PrismaService) {}
 
-  create(createTaskDto: CreateTaskDto) {
-    return this.prismaService.task.create({data: createTaskDto})
+  async create(createTaskDto: CreateTaskDto) {
+    return await this.prismaService.task.create({data: createTaskDto})
   }
 
-  findAll() {
-    return this.prismaService.task.findMany();
+  async findAll() {
+    return await this.prismaService.task.findMany();
   }
 
-  findOne(id: number) {
-    return this.prismaService.task.findUnique({where: {
+  async findOne(id: number) {
+    return await this.prismaService.task.findUnique({where: {
       id: id
     }});
   }
 
-  update(id: number, updateTaskDto: UpdateTaskDto) {
-    return this.prismaService.task.update({
+  async findByUserId(userId: string ) {
+    return await this.prismaService.task.findMany({where: {
+      userId: parseInt(userId)
+    }})
+  }
+
+  async update(id: number, updateTaskDto: UpdateTaskDto) {
+    return await this.prismaService.task.update({
       where: {id: id},
       data: updateTaskDto
     });
   }
 
-  remove(id: number) {
-    return this.prismaService.task.delete({where: {
+  async remove(id: number) {
+    return await this.prismaService.task.delete({where: {
       id: id
     }});
   }
