@@ -13,16 +13,22 @@ export class UserService {
   async create(createUserDto: CreateUserDto) {
     const saltRounds = 10;
     createUserDto.password = await bcrypt.hash(createUserDto.password, saltRounds);
-    return this.prismaService.user.create({data: createUserDto})
+    return await this.prismaService.user.create({data: createUserDto})
   }
 
-  findAll() {
-    return this.prismaService.user.findMany();
+  async findAll() {
+    return await this.prismaService.user.findMany();
   }
 
-  findOne(id: number) {
-    return this.prismaService.user.findUnique({where: {
+  async findOne(id: number) {
+    return await this.prismaService.user.findUnique({where: {
       id: id
+    }})
+  }
+
+  async findByEmail(email: string) {
+    return await this.prismaService.user.findUnique({where: {
+      email: email
     }})
   }
 
@@ -34,14 +40,14 @@ export class UserService {
         saltRounds
       )
     }
-    return this.prismaService.user.update({
+    return await this.prismaService.user.update({
       where: {
         id: id
       }, data: updateUserDto
     })
   }
 
-  remove(id: number) {
-    return this.prismaService.user.delete({where: {id: id}})
+  async remove(id: number) {
+    return await this.prismaService.user.delete({where: {id: id}})
   }
 }
