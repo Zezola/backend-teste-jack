@@ -10,15 +10,27 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      return await this.userService.create(createUserDto);
+      if (!createUserDto.email || !createUserDto.password) {
+        throw new HttpException(`Missing parameters on request body`, HttpStatus.BAD_REQUEST)
+      }
+      const user = await this.userService.findByEmail(createUserDto.email)
+      if (user) {
+        throw new HttpException(`Email is already in use`, HttpStatus.CONFLICT)
+      }
+      return this.userService.create(createUserDto)
     } catch (error) {
-      throw new HttpException(`Req body is missing fields`, HttpStatus.BAD_REQUEST)
+      throw error;
     }    
   }
 
   @Get()
   async findAll() {
     return await this.userService.findAll();
+  }
+
+  @Get(':email')
+  async findByEmail(@Param('email') email: string) {
+     return await this.userService.findByEmail(email)
   }
 
   @Get(':id')
