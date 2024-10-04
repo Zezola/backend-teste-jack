@@ -10,8 +10,11 @@ export class UserController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     try {
-      if (!createUserDto.email || !createUserDto.password) {
-        throw new HttpException(`Missing parameters on request body`, HttpStatus.BAD_REQUEST)
+      if (!createUserDto.email) {
+        throw new HttpException(`Missing field on request body: email`, HttpStatus.BAD_REQUEST)
+      }
+      if (!createUserDto.password) {
+        throw new HttpException(`Missing field on request body: password`, HttpStatus.BAD_REQUEST)
       }
       const user = await this.userService.findByEmail(createUserDto.email)
       if (user) {
