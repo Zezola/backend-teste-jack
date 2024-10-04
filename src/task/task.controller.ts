@@ -5,7 +5,7 @@ import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UserService } from 'src/user/user.service';
 
-@Controller('task')
+@Controller('tasks')
 export class TaskController {
   constructor(private readonly taskService: TaskService, private readonly userService: UserService) {}
 
