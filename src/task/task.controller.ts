@@ -46,11 +46,11 @@ export class TaskController {
     try {
        const task = await this.taskService.findOne(+id);
        if (!task) {
-        throw new Error // TODO: Provavelmente tem um jeito menos burro de fazer isso. esse if é direcionar pra cair no CATCH Talvez nem precise de try-catch
+        throw new HttpException(`No task with id ${id} found`, HttpStatus.NOT_FOUND)
        }
        return await this.taskService.findOne(+id);
     } catch (error) {
-      throw new HttpException(`No task with id ${id} found`, HttpStatus.NOT_FOUND)
+      throw error
     }    
   }
 
