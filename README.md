@@ -4,10 +4,10 @@ O back-end consiste em uma API REST onde um usuário pode se registrar e logar n
 
 ## Objetivo
 O objetivo do projeto foi verificar e expandir minhas habilidades com desenvolvimento de APIs utilizando Nest e Typescript. Com este projeto fixei conhecimentos e aprendi melhor sobre: 
--Documentação de APIs
--Autorização e Autenticação
--Boas práticas com status codes HTTP
--Tratamendo de erros e lançamento de exceptions
+- Documentação de APIs
+- Autorização e Autenticação
+- Boas práticas com status codes HTTP
+- Tratamendo de erros e lançamento de exceptions
 
 # Rodando o Projeto
 Para rodar o projeto em sua máquina, primerio clone o repositório: 
