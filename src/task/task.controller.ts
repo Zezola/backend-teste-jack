@@ -4,8 +4,11 @@ import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { UserService } from 'src/user/user.service';
+import { ApiBearerAuth, ApiHeader, ApiTags } from '@nestjs/swagger';
 
 @Controller('tasks')
+@ApiTags('tasks')
+@ApiBearerAuth()
 export class TaskController {
   constructor(private readonly taskService: TaskService, private readonly userService: UserService) {}
 
