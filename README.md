@@ -1,73 +1,46 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Backend-Teste-Jack
+Um projeto feito para um teste técnico. O projeto consiste em um task manager com back-end e front-end. Esse é o repositório APENAS do back-end. 
+O back-end consiste em uma API REST onde um usuário pode se registrar e logar na aplicação. Após logado, ele pode fazer as operações de CRUD em uma base de dados de tasks.
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Objetivo
+O objetivo do projeto foi verificar e expandir minhas habilidades com desenvolvimento de APIs utilizando Nest e Typescript. Com este projeto fixei conhecimentos e aprendi melhor sobre: 
+Documentação de APIs
+Autorização e Autenticação
+Boas práticas com status codes HTTP
+Tratamendo de erros e lançamento de exceptions
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Rodando o Projeto
+Para rodar o projeto em sua máquina, primerio clone o repositório: 
+`git clone https://github.com/Zezola/backend-teste-jack`
 
-## Description
+Em seguida, navegue até a pasta do projeto
+`cd backend-teste-jack`
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Na pasta do projeto, rode `npm install`
 
-## Installation
+Feito isso, pode rodar o projeto com `nest start`
 
-```bash
-$ npm install
-```
+# Documentação e end-points
 
-## Running the app
+A documentação dos endpoints foi feita via swagger e para acessa-la, com o projeto rodando, vá até [localhost:3000/api] (https://localhost:3000/api)
 
-```bash
-# development
-$ npm run start
+# Registrando usuário e fazendo login
 
-# watch mode
-$ npm run start:dev
+Antes de começar a acessar as funções de criar, visualizar, alterar e deletar tasks, o usuário deve estar logado. 
 
-# production mode
-$ npm run start:prod
-```
+### Criando novo usuário / Fazendo login
 
-## Test
+Para criar um novo usuário, vá até a rota POST users/register. Faça uma requisição passando e-mail e senha.
+Exemplo de body: 
+`
+{
+  "email": "teste@teste.com",
+  "password": "senhateste"
+}
+`
+Feito isto, pode ir até a roda POST /auth/signin e passe o e-mail e senha criados no passo anterior. Se o login estiver correto, você vai receber na resposta um
+access_token. Guarde este token, é com ele que você vai conseguir acessar rotas protegidas das tasks. 
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
-
-## License
-
-Nest is [MIT licensed](LICENSE).
+### Acessando as rotas protegidas
+Agora que você tem um token de acesso, ao acessar as rotas de TASKS, você deve passar este token nos HEADERS da sua requisição
+Crie um HEADER chamado Authorization, e passe para ele `Bearer $token` onde $token recebe o valor do token de acesso que conseguiu no passo anterior
