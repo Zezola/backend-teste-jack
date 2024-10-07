@@ -12,6 +12,7 @@ async function bootstrap() {
   const config = new DocumentBuilder()
     .setTitle('Teste-Jack-Backend')
     .setDescription(`API for a task manager`)
+    .addBearerAuth()
     .setVersion('1.0')
     .build();
   
